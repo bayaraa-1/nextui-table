@@ -2,8 +2,15 @@
 
 import { useEffect, useState } from 'react'
 import { useTheme } from 'next-themes'
+import Link from 'next/link'
 
-import { Button } from '@nextui-org/button'
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Button
+} from '@nextui-org/react'
 
 export default function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false)
@@ -17,15 +24,27 @@ export default function ThemeSwitcher() {
 
   return (
     <div className='flex gap-4'>
-      <Button size='sm' variant='flat' onClick={() => setTheme('light')}>
-        Light
-      </Button>
-      <Button size='sm' variant='flat' onClick={() => setTheme('dark')}>
-        Dark
-      </Button>
-      <Button size='sm' variant='flat' onClick={() => setTheme('modern')}>
-        Modern
-      </Button>
+      <Link href='/users'>
+        <Button size='md' variant='flat'>
+          Users
+        </Button>
+      </Link>
+      <Dropdown>
+        <DropdownTrigger>
+          <Button variant='bordered'>{theme}</Button>
+        </DropdownTrigger>
+        <DropdownMenu aria-label='Static Actions'>
+          <DropdownItem key='light' onClick={() => setTheme('light')}>
+            Light
+          </DropdownItem>
+          <DropdownItem key='dark' onClick={() => setTheme('dark')}>
+            Dark
+          </DropdownItem>
+          <DropdownItem key='modern' onClick={() => setTheme('modern')}>
+            Modern
+          </DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
     </div>
   )
 }
