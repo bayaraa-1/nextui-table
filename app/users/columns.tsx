@@ -1,5 +1,7 @@
-import { User, Tooltip } from '@nextui-org/react'
-import { DeleteIcon, EditIcon, EyeIcon } from '../components/Icons'
+import { User, Tooltip, Chip, ChipProps } from '@nextui-org/react'
+import { EyeIcon } from '../components/icons/EyeIcon'
+import { EditIcon } from '../components/icons/EditIcon'
+import { DeleteIcon } from '../components/icons/DeleteIcon'
 
 export type User = {
   id: string
@@ -7,16 +9,41 @@ export type User = {
   email: string
   image: string
   lastSeen: string
+  status: string
 }
+
+const statusColorMap: Record<string, ChipProps['color']> = {
+  active: 'success',
+  paused: 'danger',
+  vacation: 'warning'
+}
+
+export const statusOptions = [
+  { label: 'Active', key: 'active' },
+  { label: 'Paused', key: 'paused' },
+  { label: 'Vacation', key: 'vacation' }
+]
 
 export const columns = [
   {
+    key: 'id',
+    label: 'ID',
+    sortable: true
+  },
+  {
     key: 'name',
-    label: 'Name'
+    label: 'Name',
+    sortable: true
   },
   {
     key: 'lastSeen',
-    label: 'Last Seen'
+    label: 'Last Seen',
+    sortable: true
+  },
+  {
+    key: 'status',
+    label: 'Status',
+    sortable: true
   },
   {
     key: 'actions',
@@ -40,6 +67,17 @@ export const renderCell = (user: User, columnKey: React.Key) => {
       )
     case 'lastSeen':
       return <span>{new Date(cellValue).toLocaleDateString()}</span>
+    case 'status':
+      return (
+        <Chip
+          className='capitalize'
+          color={statusColorMap[user.status]}
+          size='sm'
+          variant='flat'
+        >
+          {cellValue}
+        </Chip>
+      )
     case 'actions':
       return (
         <div className='relative flex items-center gap-4'>

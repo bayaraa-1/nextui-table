@@ -29,6 +29,11 @@ export default function ThemeSwitcher() {
           Users
         </Button>
       </Link>
+      <Link href='/users1'>
+        <Button size='md' variant='flat'>
+          Users1
+        </Button>
+      </Link>
       <Dropdown>
         <DropdownTrigger>
           <Button variant='bordered'>{theme}</Button>
